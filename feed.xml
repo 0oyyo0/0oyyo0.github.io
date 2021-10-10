@@ -1,0 +1,1288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>My Blog</title>
+    <description>Leaning and function with your new object.</description>
+    <link>https://wangpengcheng.github.io//</link>
+    <atom:link href="https://wangpengcheng.github.io//feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Sun, 10 Oct 2021 16:04:51 +0000</pubDate>
+    <lastBuildDate>Sun, 10 Oct 2021 16:04:51 +0000</lastBuildDate>
+    <generator>Jekyll v4.2.0</generator>
+    
+      <item>
+        <title>go-gin源码阅读</title>
+        <description>&lt;h1 id=&quot;go-gin源码阅读笔记-&quot;&gt;go-gin源码阅读笔记(-)&lt;/h1&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;2021-10-06 19:45:58&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;em&gt;参考链接:&lt;/em&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/gin-gonic/gin.git&quot;&gt;github源码地址&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://gin-gonic.com/docs/&quot;&gt;gin官方文档&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://juejin.cn/post/6867175135762841607&quot;&gt;全网最详细的gin源码解析&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://zhuanlan.zhihu.com/p/372097558&quot;&gt;Gin源码分析系列之Engine篇&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Sun, 26 Sep 2021 00:00:00 +0000</pubDate>
+        <link>https://wangpengcheng.github.io//2021/09/26/gin_source_code_reading/</link>
+        <guid isPermaLink="true">https://wangpengcheng.github.io//2021/09/26/gin_source_code_reading/</guid>
+        
+        <category>go</category>
+        
+        <category>gin</category>
+        
+        <category>阅读笔记</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>学习KVM(一)</title>
+        <description>&lt;h1 id=&quot;kvm学习阅读笔记&quot;&gt;KVM学习阅读笔记&lt;/h1&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;2021-09-26 23:45:58&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;em&gt;参考链接：&lt;/em&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://yifengyou.github.io/learn-kvm/&quot;&gt;GitPage&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/yifengyou/learn-kvm&quot;&gt;GitHub&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://yifengyou.gitbooks.io/learn-kvm/content/&quot;&gt;GitBook&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;1-虚拟化技术简介&quot;&gt;1. 虚拟化技术简介&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;云计算：
+    &lt;ul&gt;
+      &lt;li&gt;云计算是一种通过因特网以服务的方式提供动态可伸缩的虚拟化的资源的计算模式。&lt;/li&gt;
+      &lt;li&gt;&lt;strong&gt;虚拟化!=云计算&lt;/strong&gt;
+        &lt;ul&gt;
+          &lt;li&gt;云计算是网格计算、分布式计算、并行计算、效用计算、网络存储、虚拟化、负载均衡等传统计算机技术和网络技术发展融合的产物。通过网络把多个成本较低的计算实体整合成一个强大计算能力的完美系统。借助三种云计算模式交付到用户手中。&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;云计算模式：
+    &lt;ul&gt;
+      &lt;li&gt;软件即服务(Software as a Service)&lt;/li&gt;
+      &lt;li&gt;平台即服务(Platform as a Service)&lt;/li&gt;
+      &lt;li&gt;基础设施即服务(Insfrastructure as a Service)&lt;/li&gt;
+      &lt;li&gt;&lt;img src=&quot;https://yifengyou.github.io/learn-kvm/docs/%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF%E7%AE%80%E4%BB%8B/image/1531895455977.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;img src=&quot;https://yifengyou.github.io/learn-kvm/docs/%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF%E7%AE%80%E4%BB%8B/image/1531895794254.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;云计算的本质：
+    &lt;ul&gt;
+      &lt;li&gt;说白了就是资源充分利用，同时节省时间高效作业。由运营商提供计算服务。&lt;/li&gt;
+      &lt;li&gt;云端的云计算系统，实质就是大型的分布式系统。虚拟化通过一个物理平台虚拟出多个虚拟平台，而其中每个虚拟平台都可以作为独立的终端加入云端的分布式系统。&lt;/li&gt;
+      &lt;li&gt;&lt;img src=&quot;https://yifengyou.github.io/learn-kvm/docs/%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF%E7%AE%80%E4%BB%8B/image/1531988018906.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;虚拟化的本质:
+    &lt;ul&gt;
+      &lt;li&gt;虚拟化是对资源的逻辑抽象、隔离、再分配、管理的一个过程，通常对虚拟化的理解有广义狭义之分。广义包括平台虚拟化、应用程序虚拟化、存储虚拟化、网络虚拟化、设备虚拟化等等。狭义的虚拟化专门指计算机上模拟运行多个操作系统平台。
+        &lt;ul&gt;
+          &lt;li&gt;服务虚拟化&lt;/li&gt;
+          &lt;li&gt;软件虚拟化&lt;/li&gt;
+          &lt;li&gt;框架虚拟化&lt;/li&gt;
+          &lt;li&gt;操作系统虚拟化&lt;/li&gt;
+          &lt;li&gt;硬件虚拟化&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;虚拟化的分类：
+    &lt;ul&gt;
+      &lt;li&gt;支持层次的划分：
+        &lt;ul&gt;
+          &lt;li&gt;软件虚拟化：将系统指令进行拦截和重新翻译
+            &lt;ul&gt;
+              &lt;li&gt;纯软件翻译：QEMU&lt;/li&gt;
+              &lt;li&gt;动态二进制翻译：VMware&lt;/li&gt;
+              &lt;li&gt;注意：特权指令需要通过模拟中断进行实现。&lt;/li&gt;
+              &lt;li&gt;优点：成本低，部署方便。缺点：两次翻译，性能一般。&lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+          &lt;li&gt;硬件虚拟化：由硬件提供基础的指令拦截和翻译
+            &lt;ul&gt;
+              &lt;li&gt;Intel便开始推广应用Intel Virtualization Technology（Intel VT）虚拟化技术&lt;/li&gt;
+              &lt;li&gt;指令不需要经过两次转换，直接到达CPU，就好像虚拟机与客户机处于同一地位。&lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+          &lt;li&gt;CPU虚拟化：软件抽象物理CPU以方便工作负载（进程线程）使用计算资源&lt;/li&gt;
+          &lt;li&gt;内存虚拟化：让CPU虚拟化出来的虚拟进程线程使用共享内存。&lt;/li&gt;
+          &lt;li&gt;网络虚拟化：本质就是，共享网络资源。虚拟机间的通信不需要流经网线，省带宽。&lt;/li&gt;
+          &lt;li&gt;存储虚拟化：NAS就是典例。&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;从虚拟平台的角度划分：
+        &lt;ul&gt;
+          &lt;li&gt;半虚拟化(Para Virtualization)：通过系统API的方式，将系统功能由母机提供给子机器。不需要额外的翻译，但是一般需要客户子机安装对应的模块支持。&lt;/li&gt;
+          &lt;li&gt;全虚拟化(Full Virtualization)(硬件辅助虚拟化)：虚拟机（VM）和硬件之间加了一个软件层–Hypervisor，或者叫做虚拟机管理程序（VMM）。VMM分为两类：
+            &lt;ul&gt;
+              &lt;li&gt;KVM：直接行在物理硬件之上，基于操作系统的Hypervisor&lt;/li&gt;
+              &lt;li&gt;QEMU：在操作系统之上通过，硬件模拟进行相关操作。&lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;从虚拟化实现结构划分：
+        &lt;ul&gt;
+          &lt;li&gt;Hypervisor型虚拟化：本质就是硬件之上没有完整的OS，直接就是Hypervisor,典型的VMware vsphere。&lt;/li&gt;
+          &lt;li&gt;宿主模型虚拟化(host模型)：依赖一个操作系统实现关键驱动，如Xen。&lt;/li&gt;
+          &lt;li&gt;混合模型虚拟化：普通操作系统，但是有些硬件权限直接交给Hypervisor，缺点是特权操作系统提供服务的时候会出现上下文切换，开销比较大。如KVM。&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;虚拟化模型：
+    &lt;ul&gt;
+      &lt;li&gt;&lt;strong&gt;虚拟化技术的核心是CPU虚拟化，只要处理器虚拟化技术支持“截获并重定向”，内存和IO设备的虚拟化都可以基于CPU虚拟化之上实现。&lt;/strong&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Sun, 26 Sep 2021 00:00:00 +0000</pubDate>
+        <link>https://wangpengcheng.github.io//2021/09/26/learn_kvm/</link>
+        <guid isPermaLink="true">https://wangpengcheng.github.io//2021/09/26/learn_kvm/</guid>
+        
+        <category>KVM</category>
+        
+        <category>QEMU</category>
+        
+        <category>阅读笔记</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>go语言设计与实现(一)</title>
+        <description>&lt;h1 id=&quot;go语言设计与实现阅读笔记-&quot;&gt;go语言设计与实现阅读笔记(-)&lt;/h1&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;2021-08-31 00:45:58&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;em&gt;参考链接：&lt;/em&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/draveness/go-internal&quot;&gt;书籍代码地址&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://draveness.me/golang/&quot;&gt;在线书籍地址&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://golang.design/under-the-hood/&quot;&gt;Go 语言原本&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://tiancaiamao.gitbooks.io/go-internals/content/zh/01.1.html&quot;&gt;深入解析go&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
+
+&lt;p&gt;本书主要分为：&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;编译原理&lt;/li&gt;
+  &lt;li&gt;运行时&lt;/li&gt;
+  &lt;li&gt;基础知识&lt;/li&gt;
+  &lt;li&gt;进阶知识&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;详细文件结构如下:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://img.draveness.me/2020-02-07-15810644766743-contents-mindnode.png&quot; alt=&quot;文章主要架构图&quot; /&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 30 Aug 2021 00:00:00 +0000</pubDate>
+        <link>https://wangpengcheng.github.io//2021/08/30/go_desgin_and_implementation_01/</link>
+        <guid isPermaLink="true">https://wangpengcheng.github.io//2021/08/30/go_desgin_and_implementation_01/</guid>
+        
+        <category>go</category>
+        
+        <category>源码分析</category>
+        
+        <category>阅读笔记</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>makrdown新语法学习</title>
+        <description>&lt;h1 id=&quot;jekyll-spcaeship功能测试&quot;&gt;jekyll-spcaeship功能测试&lt;/h1&gt;
+
+&lt;p&gt;&lt;strong&gt;参考链接&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://mermaid-js.github.io/mermaid/#/n00b-gettingStarted&quot;&gt;mermaid文档&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;[e/jekyll-spaceship/edit/master/README.md](https://mermaid-js.github.io/mermaid-live-editor/edit/#eyJjb2RlIjoic2VxdWVuY2VEaWFncmFtXG4gICAgQWxpY2UtPj4rSm9objogSGVsbG8gSm9obiwgaG93IGFyZSB5b3U_XG4gICAgQWxpY2UtPj4rSm9objogSm9obiwgY2FuIHlvdSBoZWFyIG1lP1xuICAgIEpvaG4tLT4-LUFsaWNlOiBIaSBBbGljZSwgSSBjYW4gaGVhciB5b3UhXG4gICAgSm9obi0tPj4tQWxpY2U6IEkgZmVlbCBncmVhdCFcbiAgICAgICAgICAgICIsIm1lcm1haWQiOiJ7XG4gIFwidGhlbWVcIjogXCJkZWZhdWx0XCJcbn0iLCJ1cGRhdGVFZGl0b3IiOmZhbHNlLCJhdXRvU3luYyI6dHJ1ZSwidXBkYXRlRGlhZ3JhbSI6ZmFsc2V9)&quot;&gt;mermaid在线编辑器&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://wangpengcheng.github.io/2020/06/26/uml_learn_note/&quot;&gt;plantuml学习笔记&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.webfx.com/tools/emoji-cheat-sheet/&quot;&gt;Emoji表情列表&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.unicode.org/emoji/charts/full-emoji-list.html&quot;&gt;全表情列表&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.jianshu.com/p/31f075f8e118&quot;&gt;在 markdown 中使用表情符号&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.emojiall.com/zh-hans&quot;&gt;emoji中文查询&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;最新博客完成了升级，为了熟悉新对功能，进行新的语法知识的学习&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;1-mathjax语法&quot;&gt;1. MathJax语法&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://docs.mathjax.org/en/latest/&quot;&gt;MathJax Documentation&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://blog.csdn.net/dabokele/article/details/79577072&quot;&gt;MathJax公式教程&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://zhuanlan.zhihu.com/p/110756681&quot;&gt;LaTeX 公式篇&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.jianshu.com/p/22117d964baf&quot;&gt;LATEX公式总结&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;尝试使用公式：
+$$\Gamma(z) = \int_0^\infty t^{z-1}e^{-t}dt\,$$&lt;/p&gt;
+
+\[\left \{ 
+\begin{array}{c}
+a_1x+b_1y+c_1z=d_1 \\
+a_2x+b_2y+c_2z=d_2 \\
+a_3x+b_3y+c_3z=d_3
+\end{array}
+\right
+\tag{1.1}
+.\]
+
+\[f(n)
+\begin{cases}
+\cfrac n2, &amp;amp;if\ n\ is\ even\\[5ex]
+3n + 1, &amp;amp;if\  n\ is\ odd
+\end{cases}\]
+
+&lt;h2 id=&quot;2-plantuml语法&quot;&gt;2. PlantUML语法&lt;/h2&gt;
+
+&lt;h2 id=&quot;3-mermaid语法&quot;&gt;3. Mermaid语法&lt;/h2&gt;
+
+&lt;h2 id=&quot;4-media语法&quot;&gt;4. Media语法&lt;/h2&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Inline-style:
+![]({media-link})
+
+OR
+
+![][{reference}]
+
+[{reference}]: {media-link}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;对于常用视频网站可以直接进行添加&lt;/p&gt;
+
+&lt;p&gt;正常使用如下：&lt;/p&gt;
+
+&lt;iframe src=&quot;//player.bilibili.com/player.html?aid=462256092&amp;amp;bvid=BV1mL411E7Uk&amp;amp;cid=388230485&amp;amp;page=1&quot; scrolling=&quot;no&quot; border=&quot;0&quot; frameborder=&quot;no&quot; framespacing=&quot;0&quot; allowfullscreen=&quot;true&quot; style=&quot;width: 100%;height:480px&quot;&gt; &lt;/iframe&gt;
+
+</description>
+        <pubDate>Sun, 15 Aug 2021 00:00:00 +0000</pubDate>
+        <link>https://wangpengcheng.github.io//2021/08/15/markdown_learn/</link>
+        <guid isPermaLink="true">https://wangpengcheng.github.io//2021/08/15/markdown_learn/</guid>
+        
+        <category>Markdown</category>
+        
+        <category>PlantUML</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>jekyll-spcaeship相关功能测试</title>
+        <description>&lt;h1 id=&quot;jekyll-spcaeship功能测试&quot;&gt;jekyll-spcaeship功能测试&lt;/h1&gt;
+
+&lt;p&gt;&lt;strong&gt;参考链接&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/jeffreytse/jekyll-spaceship&quot;&gt;jekyll-spaceship插件说明&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/jeffreytse/jekyll-deploy-action&quot;&gt;GitHub Action自动编译&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://jekyllrb.com/&quot;&gt;jekyll官方网站&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://jekyllrb.com/docs/installation/macos/&quot;&gt;jekyll mac安装说明&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/jeffreytse/jekyll-spaceship/edit/master/README.md&quot;&gt;标准状况地址&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;table测试&quot;&gt;Table测试&lt;/h3&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: right&quot;&gt;Stage&lt;/th&gt;
+      &lt;th style=&quot;text-align: right&quot;&gt;Direct Products&lt;/th&gt;
+      &lt;th style=&quot;text-align: right&quot;&gt;ATP Yields&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;Glycolysis&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;2 ATP              |&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;^^&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;2 NADH&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;3–5 ATP&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;Pyruvaye oxidation&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;2 NADH&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;5 ATP&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;Citric acid cycle&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;2 ATP              |&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;^^&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;6 NADH&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;15 ATP&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;^^&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;2 FADH&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;3 ATP&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;30–32 ATP        ||&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt; &lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h4 id=&quot;multiline&quot;&gt;Multiline&lt;/h4&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;:    Easy Multiline   : ||&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt; &lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt; &lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Apple&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Banana&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Orange  \&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Apple&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Banana&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Orange  \&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Apple&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Banana&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Orange&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Apple&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Banana&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Orange  \&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Apple&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Banana&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Orange&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Apple&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Banana&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Orange&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h4 id=&quot;headerless&quot;&gt;Headerless&lt;/h4&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;♜&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;♝&lt;/td&gt;
+      &lt;td&gt;♛&lt;/td&gt;
+      &lt;td&gt;♚&lt;/td&gt;
+      &lt;td&gt;♝&lt;/td&gt;
+      &lt;td&gt;♞&lt;/td&gt;
+      &lt;td&gt;♜&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;♟&lt;/td&gt;
+      &lt;td&gt;♟&lt;/td&gt;
+      &lt;td&gt;♟&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;♟&lt;/td&gt;
+      &lt;td&gt;♟&lt;/td&gt;
+      &lt;td&gt;♟&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;♟&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;♞&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;♗&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;♟&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;♙&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;♘&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;♙&lt;/td&gt;
+      &lt;td&gt;♙&lt;/td&gt;
+      &lt;td&gt;♙&lt;/td&gt;
+      &lt;td&gt;♙&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;♙&lt;/td&gt;
+      &lt;td&gt;♙&lt;/td&gt;
+      &lt;td&gt;♙&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;♖&lt;/td&gt;
+      &lt;td&gt;♘&lt;/td&gt;
+      &lt;td&gt;♗&lt;/td&gt;
+      &lt;td&gt;♕&lt;/td&gt;
+      &lt;td&gt;♔&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;♖&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h4 id=&quot;cell-alignment&quot;&gt;Cell Alignment&lt;/h4&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;:        Fruits || Food       : ||&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt; &lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt; &lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Apple&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;: Apple :&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Apple      \&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Banana&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Banana&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Banana     \&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Orange&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Orange&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Orange&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;:   Rowspan is 4    : |&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;How’s it?&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;^^    A. Peach         |&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1. Fine :&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;^^    B. Orange        |&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;^^ 2. Bad&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;^^    C. Banana        |&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;It’s OK!&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h4 id=&quot;cell-markdown&quot;&gt;Cell Markdown&lt;/h4&gt;
+
+&lt;p&gt;Sometimes we may need some abundant content (e.g., mathjax, image, video) in Markdown table
+Therefore, here we also make markown syntax possible inside a cell.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;:                   MathJax || Image                 : ||&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt; &lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt; &lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Apple&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;: Apple :&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Apple                          \&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Banana&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Banana&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Banana                         \&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Orange&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Orange&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Orange&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;:     Rowspan is 4     : |&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;:        How’s it?           :&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;^^     A. Peach          |&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1. ![example](https://jekyllrb.com/img/octojekyll.png &quot;An exemplary image&quot;)&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;^^     B. Orange         |&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;^^ 2. $I = \int \rho R^{2} dV$&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;^^     C. Banana         |&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;**It’s OK!**&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h4 id=&quot;cell-inline-attributes&quot;&gt;Cell Inline Attributes&lt;/h4&gt;
+
+&lt;p id=&quot;id&quot; class=&quot;cls1 cls2 cls1 cls2 .cls3 cls4&quot; title=&quot;hallo you&quot;&gt;{: #id .cls1 .cls2} &lt;!-- #id &lt;=&gt; id=&quot;id&quot;, .cls1 .cls2 &lt;=&gt; class=&quot;cls1 cls2&quot; --&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;表格测试&quot;&gt;表格测试&lt;/h4&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;:             Here’s an Inline Attribute Lists example                :|||&lt;/th&gt;
+      &lt;th&gt; &lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;:       :&lt;/td&gt;
+      &lt;td&gt;:  &amp;lt;div style=&quot;color: red;&quot;&amp;gt; &amp;lt; Normal HTML Block &amp;gt; &amp;lt;/div&amp;gt; :||&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;^^&lt;/td&gt;
+      &lt;td&gt;Red    {: .cls style=&quot;background: orange&quot; }                ||&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;^^ IALs&lt;/td&gt;
+      &lt;td&gt;Green  {: #id style=&quot;background: green; color: white&quot; }    ||&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;^^&lt;/td&gt;
+      &lt;td&gt;Blue   {: style=&quot;background: blue; color: white&quot; }         ||&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;^^&lt;/td&gt;
+      &lt;td&gt;Black  {: color-style text-style }                         ||&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;mathjax-测试&quot;&gt;MathJax 测试&lt;/h3&gt;
+
+&lt;p&gt;$ a * b = c ^ b $&lt;/p&gt;
+
+&lt;p&gt;$ 2^{\frac{n-1}{3}} $&lt;/p&gt;
+
+&lt;p&gt;$ \int_a^b f(x)\,dx. $&lt;/p&gt;
+
+&lt;h3 id=&quot;plantuml测试&quot;&gt;PlantUML测试&lt;/h3&gt;
+
+&lt;p&gt;&lt;img class=&quot;plantuml&quot; src=&quot;http://www.plantuml.com/plantuml/svg/~h407374617274756d6c0a426f62202d3e20416c696365203a2068656c6c6f20776f726c640a40656e64756d6c&quot; /&gt;
+OR&lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&quot;plantuml&quot; src=&quot;http://www.plantuml.com/plantuml/svg/~h407374617274756d6c0a426f62202d3e20416c696365203a2068656c6c6f0a40656e64756d6c&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;mermaid-usage&quot;&gt;Mermaid Usage&lt;/h3&gt;
+
+&lt;p&gt;&lt;img class=&quot;mermaid&quot; src=&quot;https://mermaid.ink/img/eyJjb2RlIjoicGllIHRpdGxlIFBldHMgYWRvcHRlZCBieSB2b2x1bnRlZXJzXG5cIkRvZ3NcIiA6IDM4NlxuXCJDYXRzXCIgOiA4NVxuXCJSYXRzXCIgOiAzNSIsIm1lcm1haWQiOnsidGhlbWUiOiJkZWZhdWx0In19&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&quot;mermaid&quot; src=&quot;https://mermaid.ink/img/eyJjb2RlIjoicGllIHRpdGxlIFBldHMgYWRvcHRlZCBieSB2b2x1bnRlZXJzXG5cIkRvZ3NcIiA6IDM4NlxuXCJDYXRzXCIgOiA4NVxuXCJSYXRzXCIgOiAzNSIsIm1lcm1haWQiOnsidGhlbWUiOiJkZWZhdWx0In19&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&quot;mermaid&quot; src=&quot;https://mermaid.ink/img/eyJjb2RlIjoic2VxdWVuY2VEaWFncmFtXG5wYXJ0aWNpcGFudCBBbGljZVxucGFydGljaXBhbnQgQm9iXG5BbGljZS0-PkpvaG46IEhlbGxvIEpvaG4sIGhvdyBhcmUgeW91P1xubG9vcCBIZWFsdGhjaGVja1xuSm9obi0-PkpvaG46IEZpZ2h0IGFnYWluc3QgaHlwb2Nob25kcmlhXG5lbmRcbk5vdGUgcmlnaHQgb2YgSm9objogUmF0aW9uYWwgdGhvdWdodHMgPGJyLz5wcmV2YWlsIVxuSm9obi0tPj5BbGljZTogR3JlYXQhXG5Kb2huLT4-Qm9iOiBIb3cgYWJvdXQgeW91P1xuQm9iLS0-PkpvaG46IEpvbGx5IGdvb2QhIiwibWVybWFpZCI6eyJ0aGVtZSI6ImRlZmF1bHQifX0&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;media-usage&quot;&gt;Media Usage&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://open.spotify.com/track/4Dg5moVCTqxAb7Wr8Dq2T5&quot; alt=&quot;测试&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;//www.html5rocks.com/en/tutorials/video/basics/devstories.webm&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;//techslides.com/demos/sample-videos/small.ogv?allow=autoplay&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;//techslides.com/demos/sample-videos/small.mp4?width=400&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.youtube.com/watch?v=Ptk_1Dc2iPY?width=800&amp;amp;height=500&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.dailymotion.com/video/x7tfyq3?width=100%&amp;amp;height=400&amp;amp;autoplay=1&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;8-emoji-usage&quot;&gt;8. Emoji Usage&lt;/h3&gt;
+
+&lt;p&gt;I give this plugin two :+1:!&lt;/p&gt;
+</description>
+        <pubDate>Sat, 14 Aug 2021 00:00:00 +0000</pubDate>
+        <link>https://wangpengcheng.github.io//2021/08/14/jekyll_spaceship_test/</link>
+        <guid isPermaLink="true">https://wangpengcheng.github.io//2021/08/14/jekyll_spaceship_test/</guid>
+        
+        <category>Markdown</category>
+        
+        <category>jekyll-spaceship</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>protobuf学习笔记</title>
+        <description>&lt;h1 id=&quot;protobuf-学习笔记&quot;&gt;protobuf 学习笔记&lt;/h1&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;2020-10-08 19:57:58&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;0-参考链接&quot;&gt;0 参考链接&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://developers.google.com/protocol-buffers/docs/reference/cpp-generated&quot;&gt;官方文档&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.jianshu.com/p/73c9ed3a4877&quot;&gt;深入 ProtoBuf-编码&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.jianshu.com/p/62f0238beec8&quot;&gt;深入 ProtoBuf - 序列化源码解析&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://colobu.com/2015/01/07/Protobuf-language-guide/&quot;&gt;Protobuf 语法指南&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/protocolbuffers/protobuf&quot;&gt;protobuff源码&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/google/flatbuffers&quot;&gt;flatbuffers源码&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;1-基础语法&quot;&gt;1. 基础语法&lt;/h2&gt;
+&lt;p&gt;下面是一个简单的使用示例:&lt;/p&gt;
+
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;message&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SearchRequest&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;required&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;query&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;optional&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;int32&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;page_number&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;optional&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;int32&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result_per_page&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//设置默认值&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;其中后面的数字编号表示；二进制格式中识别各个字段的，一旦开始使用就不能再改变，[1,15]之内的标识号在编码的时候会占用一个字节，之后的[16,2047]会占用两个字节&lt;/p&gt;
+
+&lt;h3 id=&quot;11-指定字段规则&quot;&gt;1.1 指定字段规则:&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;required: 表示该字段必须&lt;/li&gt;
+  &lt;li&gt;optional: 可选项，表示该字段必须有0个或者1个值(不超过一个)&lt;/li&gt;
+  &lt;li&gt;repeated: 可重复值，相当于List
+基本数值类型的repeated的字段并没有被尽可能地高效编码。在新的代码中，用户应该使用特殊选项[packed=true]来保证更高效的编码。如：&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;注意:在proto3中没有这些选项&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;repeated int32 samples &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 4 &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;packed&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;12-基本数据类型&quot;&gt;1.2 基本数据类型&lt;/h3&gt;
+
+&lt;p&gt;proto中定义的基本数据类型会对应不同语言的基本数据类型如下:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;.proto Type&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Notes&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;C++ Type&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Java Type&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Python Type&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Go Type&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;double&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;double&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;double&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;float&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;*float64&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;float&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;float&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;float&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;float&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;*float32&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;int32&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Uses variable-length encoding. Inefficient for encoding negative numbers – if your field is likely to have negative values, use sint32 instead.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;int32&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;int&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;int&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;*int32&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;int64&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Uses variable-length encoding. Inefficient for encoding negative numbers – if your field is likely to have negative values, use sint64 instead.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;int64&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;long&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;int/long&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;*int64&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;uint32&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Uses variable-length encoding.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;uint32&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;int&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;int/long&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;*uint32&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;uint64&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Uses variable-length encoding.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;uint64&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;long&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;int/long&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;*uint64&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;sint32&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Uses variable-length encoding. Signed int value. These more efficiently encode negative numbers than regular int32s.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;int32&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;int&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;int&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;*int32&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;sint64&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Usesvariable-length encoding. Signed int value. These more efficiently encode negative numbers than regular int64s.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;int64&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;long&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;int/long&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;*int64&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;fixed32&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Always four bytes. More efficient than uint32 if values are often greater than 228.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;uint32&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;int&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;int/long&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;*uint32&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;fixed64&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Always eight bytes. More efficient than uint64 if values are often greater than 256.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;uint64&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;long&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;int/long&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;*uint64&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;sfixed32&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Always four bytes.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;int32&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;int&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;int&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;*int32&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;sfixed64&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Always eight bytes.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;int64&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;long&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;int/long&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;*int64&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;bool|&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;bool&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;boolean&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;bool&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;*bool&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;string&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;A string must always contain UTF-8 encoded or 7-bit ASCII text.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;string&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;String&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;unicode (Python 2) or str (Python 3)&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;*string&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;bytes&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;May contain any arbitrary sequence of bytes.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;string&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;ByteString&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;bytes&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;[]byte&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;13-枚举&quot;&gt;1.3 枚举&lt;/h3&gt;
+
+&lt;p&gt;proto 中可以使用枚举类型作为关键的选择类；同时可以为枚举常量定义别名。需要设置allow_alias option 为 true, 否则 protocol编译器会产生错误信息。&lt;/p&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;enum EnumAllowingAlias &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  option allow_alias &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  UNKNOWN &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 0&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  STARTED &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 1&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  RUNNING &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 1&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+enum EnumNotAllowingAlias &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  UNKNOWN &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 0&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  STARTED &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 1&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  // RUNNING &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 1&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;  // Uncommenting this line will cause a compile error inside Google and a warning message outside.
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;14-扩展&quot;&gt;1.4 扩展&lt;/h3&gt;
+
+&lt;p&gt;proto中允许使用扩展，通过定义相关的序列化字段，允许子类进行进一步的扩展；使用示例如下:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// 
+message Foo &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  // ...
+  // 定义可扩展字段
+  extensions 100 to 199&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+// 继承并定义
+
+extend Foo &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  optional int32 bar &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 126&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;15-导入定义&quot;&gt;1.5 导入定义&lt;/h3&gt;
+
+&lt;p&gt;可以通过导入（importing）其他.proto文件中的定义来使用它们。要导入其他.proto文件的定义，你需要在你的文件中添加一个导入声明，如：&lt;/p&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;import &lt;span class=&quot;s2&quot;&gt;&quot;myproject/other_protos.proto&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;16-oneof&quot;&gt;1.6 Oneof&lt;/h3&gt;
+
+&lt;p&gt;如果你的消息中有很多可选字段， 并且同时至多一个字段会被设置， 你可以加强这个行为，使用oneof特性节省内存.&lt;/p&gt;
+
+&lt;p&gt;Oneof字段就像可选字段， 除了它们会共享内存， 至多一个字段会被设置。 设置其中一个字段会清除其它oneof字段。 你可以使用case()或者WhichOneof() 方法检查哪个oneof字段被设置，使用示例如下:&lt;/p&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;message SampleMessage &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  oneof test_oneof &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+     string name &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 4&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+     SubMessage sub_message &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 9&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;然后你可以增加oneof字段到 oneof 定义中. 你可以增加任意类型的字段, 但是不能使用 required, optional, repeated 关键字.&lt;/p&gt;
+
+&lt;p&gt;在产生的代码中, oneof字段拥有同样的 getters 和setters， 就像正常的可选字段一样. 也有一个特殊的方法来检查到底那个字段被设置. 你可以在相应的语言API中找到oneof API介绍.&lt;/p&gt;
+
+&lt;p&gt;Oneof 特性:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;设置oneof会自动清楚其它oneof字段的值. 所以设置多次后，只有最后一次设置的字段有值.&lt;/li&gt;
+  &lt;li&gt;oneof不支持扩展.&lt;/li&gt;
+  &lt;li&gt;oneof不能 repeated.&lt;/li&gt;
+  &lt;li&gt;反射API对oneof 字段有效.&lt;/li&gt;
+  &lt;li&gt;如果使用C++,需确保代码不会导致内存泄漏. 下面的代码会崩溃， 因为sub_message 已经通过set_name()删除了.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;SampleMessage&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;SubMessage&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sub_message&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mutable_sub_message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;“&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;      &lt;span class=&quot;c1&quot;&gt;// Will delete sub_message&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;sub_message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;…&lt;/span&gt;         
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;17-包package&quot;&gt;1.7 包(package)&lt;/h3&gt;
+
+&lt;p&gt;当然可以为.proto文件新增一个可选的package声明符，用来防止不同的消息类型有命名冲突&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;package foo.bar&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+message Open &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; ... &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;18-定义服务service&quot;&gt;1.8 定义服务(Service)&lt;/h3&gt;
+
+&lt;p&gt;可以在.proto文件中定义一个RPC服务接口，protocol buffer编译器将会根据所选择的不同语言生成服务接口代码及存根。如，想要定义一个RPC服务并具有一个方法，该方法能够接收 SearchRequest并返回一个SearchResponse，此时可以在.proto文件中进行如下定义：&lt;/p&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;service SearchService &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  rpc Search &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;SearchRequest&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; returns &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;SearchResponse&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;protocol编译器将产生一个抽象接口SearchService以及一个相应的存根实现。存根将所有的调用指向RpcChannel，它是一 个抽象接口，必须在RPC系统中对该接口进行实现。如，可以实现RpcChannel以完成序列化消息并通过HTTP方式来发送到一个服务器。换句话说， 产生的存根提供了一个类型安全的接口用来完成基于protocolbuffer的RPC调用，而不是将你限定在一个特定的RPC的实现中。C++中的代码 如下所示：&lt;/p&gt;
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;google&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;protobuf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;protobuf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RpcChannel&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;channel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;protobuf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RpcController&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;controller&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;SearchService&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;service&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;SearchRequest&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;SearchResponse&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;DoSearch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;// You provide classes MyRpcChannel and MyRpcController, which implement&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;// the abstract interfaces protobuf::RpcChannel and protobuf::RpcController.&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;channel&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MyRpcChannel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;somehost.example.com:1234&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;controller&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MyRpcController&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;// The protocol compiler generates the SearchService class based on the&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;// definition given above.&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;service&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SearchService&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Stub&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;channel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;// Set up the request.&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_query&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;protocol buffers&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;// Execute the RPC.&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;service&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Search&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;controller&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;protobuf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NewCallback&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Done&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Done&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;delete&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;service&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;delete&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;channel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;delete&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;controller&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;所有service类都必须实现Service接口，它提供了一种用来调用具体方法的方式，即在编译期不需要知道方法名及它的输入、输出类型。在服务器端，通过服务注册它可以被用来实现一个RPC Server。&lt;/p&gt;
+
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;google&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;protobuf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ExampleSearchService&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SearchService&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+ &lt;span class=&quot;nl&quot;&gt;public:&lt;/span&gt;
+  &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Search&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;protobuf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RpcController&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;controller&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+              &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SearchRequest&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+              &lt;span class=&quot;n&quot;&gt;SearchResponse&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+              &lt;span class=&quot;n&quot;&gt;protobuf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Closure&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;done&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;query&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;google&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://www.google.com&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;query&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;protocol buffers&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://protobuf.googlecode.com&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;done&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Run&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;// You provide class MyRpcServer.  It does not have to implement any&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;// particular interface; this is just an example.&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;MyRpcServer&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;server&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;protobuf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Service&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;service&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ExampleSearchService&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;server&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ExportOnPort&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1234&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;service&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;server&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Run&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;delete&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;service&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;19-选项options&quot;&gt;1.9 选项（Options）&lt;/h3&gt;
+
+&lt;p&gt;在定义.proto文件时能够标注一系列的options。Options并不改变整个文件声明的含义，但却能够影响特定环境下处理方式。完整的可用选项可以在google/protobuf/descriptor.proto找到。&lt;/p&gt;
+
+&lt;p&gt;一些选项是文件级别的，意味着它可以作用于最外范围，不包含在任何消息内部、enum或服务定义中。一些选项是消息级别的，意味着它可以用在消息定 义的内部。当然有些选项可以作用在域、enum类型、enum值、服务类型及服务方法中。到目前为止，并没有一种有效的选项能作用于所有的类型。&lt;/p&gt;
+
+&lt;p&gt;常用选项类型如下:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;optimize_for (fileoption): 可以被设置为 SPEED, CODE_SIZE,or LITE_RUNTIME。这些值将通过如下的方式影响C++及java代码的生成：
+    &lt;ul&gt;
+      &lt;li&gt;SPEED (default): protocol buffer编译器将通过在消息类型上执行序列化、语法分析及其他通用的操作。这种代码是最优的。&lt;/li&gt;
+      &lt;li&gt;CODE_SIZE: protocol buffer编译器将会产生最少量的类，通过共享或基于反射的代码来实现序列化、语法分析及各种其它操作。采用该方式产生的代码将比SPEED要少得多， 但是操作要相对慢些。当然实现的类及其对外的API与SPEED模式都是一样的。这种方式经常用在一些包含大量的.proto文件而且并不盲目追求速度的 应用中。&lt;/li&gt;
+      &lt;li&gt;LITE_RUNTIME: protocol buffer编译器依赖于运行时核心类库来生成代码（即采用libprotobuf-lite 替代libprotobuf）。这种核心类库由于忽略了一 些描述符及反射，要比全类库小得多。这种模式经常在移动手机平台应用多一些。编译器采用该模式产生的方法实现与SPEED模式不相上下，产生的类通过实现 MessageLite接口，但它仅仅是Messager接口的一个子集。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;cc_generic_services, java_generic_services, py_generic_services (file options):protocol buffer编译器是否应该基于服务定义产生抽象服务代码。&lt;/li&gt;
+  &lt;li&gt;message_set_wire_format (message option)：如果该值被设置为true，该消息将使用一种不同的二进制格式来与Google内部的MessageSet的老格式相兼容。对于Google外部的用户来说，该选项将不会被用到。&lt;/li&gt;
+  &lt;li&gt;packed (field option): 如果该选项在一个整型基本类型上被设置为真，则采用更紧凑的编码方式。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;110-自定义选项&quot;&gt;1.10 自定义选项&lt;/h3&gt;
+
+&lt;p&gt;ProtocolBuffers允许自定义并使用选项。该功能应该属于一个高级特性，对于大部分人是用不到的。由于options是定在 google/protobuf/descriptor.proto中的，因此你可以在该文件中进行扩展，定义自己的选项。如：&lt;/p&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;import &lt;span class=&quot;s2&quot;&gt;&quot;google/protobuf/descriptor.proto&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+extend google.protobuf.MessageOptions &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  optional string my_option &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 51234&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+message MyMessage &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  option &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;my_option&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Hello world!&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;在上述代码中，通过对MessageOptions进行扩展定义了一个新的消息级别的选项。当使用该选项时，选项的名称需要使用（）包裹起来，以表明它是一个扩展。在C++代码中可以看出my_option是以如下方式被读取的。&lt;/p&gt;
+
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MyMessage&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;descriptor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetExtension&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;my_option&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;continue&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Sun, 25 Oct 2020 00:00:00 +0000</pubDate>
+        <link>https://wangpengcheng.github.io//2020/10/25/protobuf_learn_note/</link>
+        <guid isPermaLink="true">https://wangpengcheng.github.io//2020/10/25/protobuf_learn_note/</guid>
+        
+        <category>C++</category>
+        
+        <category>序列化</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>CUDA高性能编程实战</title>
+        <description>&lt;h1 id=&quot;gpu-高性能编程cuda实战&quot;&gt;GPU 高性能编程CUDA实战&lt;/h1&gt;
+
+&lt;p&gt;&lt;em&gt;参考链接:&lt;/em&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.nvidia.com/cuda/archive/9.2/cuda-c-programming-guide/index.html&quot;&gt;CUDA C Programming Guide&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.cnblogs.com/timlly/p/11471507.html&quot;&gt;深入GPU硬件架构及运行机制&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;2020-10-20 15:38:58&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;第三章-cuda-c简介&quot;&gt;第三章 CUDA C简介&lt;/h2&gt;
+
+&lt;h3 id=&quot;33-查询设备&quot;&gt;3.3 查询设备&lt;/h3&gt;
+&lt;p&gt;cuda中可以使用cudaGetDeviceProperties进行设备查询；其函数对应接口如下:&lt;/p&gt;
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;cudaError_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CUDARTAPI&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;cudaGetDeviceProperties&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;cudaDeviceProp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;device&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;其中&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cudaDeviceProp&lt;/code&gt;关键属性如下:&lt;/p&gt;
+
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cm&quot;&gt;/**
+ * CUDA device properties
+ */&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;__device_builtin__&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cudaDeviceProp&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;256&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;                  &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; ASCII string identifying device */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;size_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;totalGlobalMem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;             &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Global memory available on device in bytes */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;size_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sharedMemPerBlock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;          &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Shared memory available per block in bytes */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;regsPerBlock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;               &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; 32-bit registers available per block */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;warpSize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;                   &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Warp size in threads */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;size_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;memPitch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;                   &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Maximum pitch in bytes allowed by memory copies */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;maxThreadsPerBlock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;         &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Maximum number of threads per block */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;maxThreadsDim&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;           &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Maximum size of each dimension of a block */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;maxGridSize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;             &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Maximum size of each dimension of a grid */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;clockRate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;                  &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Clock frequency in kilohertz */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;size_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;totalConstMem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;              &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Constant memory available on device in bytes */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;major&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;                      &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Major compute capability */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;minor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;                      &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Minor compute capability */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;size_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;textureAlignment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;           &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Alignment requirement for textures */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;size_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;texturePitchAlignment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;      &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Pitch alignment requirement for texture references bound to pitched memory */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;deviceOverlap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;              &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Device can concurrently copy memory and execute a kernel. Deprecated. Use instead asyncEngineCount. */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;multiProcessorCount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;        &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Number of multiprocessors on device */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;kernelExecTimeoutEnabled&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;   &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Specified whether there is a run time limit on kernels */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;integrated&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;                 &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Device is integrated as opposed to discrete */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;canMapHostMemory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;           &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Device can map host memory with cudaHostAlloc/cudaHostGetDevicePointer */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;computeMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;                &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Compute mode (See ::cudaComputeMode) */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;maxTexture1D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;               &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Maximum 1D texture size */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;maxTexture1DMipmap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;         &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Maximum 1D mipmapped texture size */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;maxTexture1DLinear&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;         &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Maximum size for 1D textures bound to linear memory */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;maxTexture2D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;            &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Maximum 2D texture dimensions */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;maxTexture2DMipmap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;      &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Maximum 2D mipmapped texture dimensions */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;maxTexture2DLinear&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;      &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Maximum dimensions (width, height, pitch) for 2D textures bound to pitched memory */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;maxTexture2DGather&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;      &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Maximum 2D texture dimensions if texture gather operations have to be performed */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;maxTexture3D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;            &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Maximum 3D texture dimensions */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;maxTexture3DAlt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;         &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Maximum alternate 3D texture dimensions */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;maxTextureCubemap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;          &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Maximum Cubemap texture dimensions */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;maxTexture1DLayered&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;     &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Maximum 1D layered texture dimensions */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;maxTexture2DLayered&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;     &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Maximum 2D layered texture dimensions */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;maxTextureCubemapLayered&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;&lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Maximum Cubemap layered texture dimensions */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;maxSurface1D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;               &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Maximum 1D surface size */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;maxSurface2D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;            &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Maximum 2D surface dimensions */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;maxSurface3D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;            &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Maximum 3D surface dimensions */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;maxSurface1DLayered&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;     &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Maximum 1D layered surface dimensions */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;maxSurface2DLayered&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;     &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Maximum 2D layered surface dimensions */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;maxSurfaceCubemap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;          &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Maximum Cubemap surface dimensions */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;maxSurfaceCubemapLayered&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;&lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Maximum Cubemap layered surface dimensions */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;size_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;surfaceAlignment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;           &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Alignment requirements for surfaces */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;concurrentKernels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;          &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Device can possibly execute multiple kernels concurrently */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;ECCEnabled&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;                 &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Device has ECC support enabled */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;pciBusID&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;                   &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; PCI bus ID of the device */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;pciDeviceID&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;                &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; PCI device ID of the device */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;pciDomainID&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;                &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; PCI domain ID of the device */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;tccDriver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;                  &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; 1 if device is a Tesla device using TCC driver, 0 otherwise */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;asyncEngineCount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;           &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Number of asynchronous engines */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;unifiedAddressing&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;          &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Device shares a unified address space with the host */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;memoryClockRate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;            &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Peak memory clock frequency in kilohertz */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;memoryBusWidth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;             &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Global memory bus width in bits */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;l2CacheSize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;                &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Size of L2 cache in bytes */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;maxThreadsPerMultiProcessor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Maximum resident threads per multiprocessor */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;streamPrioritiesSupported&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;  &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Device supports stream priorities */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;globalL1CacheSupported&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;     &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Device supports caching globals in L1 */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;localL1CacheSupported&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;      &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Device supports caching locals in L1 */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;size_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sharedMemPerMultiprocessor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Shared memory available per multiprocessor in bytes */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;regsPerMultiprocessor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;      &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; 32-bit registers available per multiprocessor */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;managedMemory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;              &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Device supports allocating managed memory on this system */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;isMultiGpuBoard&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;            &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Device is on a multi-GPU board */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;multiGpuBoardGroupID&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;       &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Unique identifier for a group of devices on the same multi-GPU board */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;hostNativeAtomicSupported&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;  &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Link between the device and the host supports native atomic operations */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;singleToDoublePrecisionPerfRatio&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Ratio of single precision performance (in floating-point operations per second) to double precision performance */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;pageableMemoryAccess&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;       &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Device supports coherently accessing pageable memory without calling cudaHostRegister on it */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;concurrentManagedAccess&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;    &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Device can coherently access managed memory concurrently with the CPU */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;computePreemptionSupported&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Device supports Compute Preemption */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;canUseHostPointerForRegisteredMem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Device can access host registered memory at the same virtual address as the CPU */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;cooperativeLaunch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;          &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Device supports launching cooperative kernels via ::cudaLaunchCooperativeKernel */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;cooperativeMultiDeviceLaunch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Device can participate in cooperative kernels launched via ::cudaLaunchCooperativeKernelMultiDevice */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;size_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sharedMemPerBlockOptin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;     &lt;span class=&quot;cm&quot;&gt;/**&amp;lt; Per device maximum shared memory per block usable by special opt in */&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;关键使用和查询代码如下:&lt;/p&gt;
+
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dev&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driverVersion&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;runtimeVersion&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;cudaSetDevice&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dev&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;cudaDeviceProp&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;deviceProp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;cudaGetDeviceProperties&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;deviceProp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dev&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;cudaDriverGetVersion&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;driverVersion&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;cudaRuntimeGetVersion&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;runtimeVersion&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;printf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;  CUDA Driver Version / Runtime Version          %d.%d / %d.%d&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driverVersion&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;driverVersion&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;runtimeVersion&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;runtimeVersion&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;printf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;  CUDA Capability Major/Minor version number:    %d.%d&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;deviceProp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;major&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;deviceProp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;minor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;cm&quot;&gt;/* 输出对应属性--略*/&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;详细代码见:&lt;/p&gt;
+
+&lt;h4 id=&quot;co-issue&quot;&gt;co-issue&lt;/h4&gt;
+
+&lt;p&gt;co-issue是为了解决SIMD运算单元无法充分利用的问题。例如下图，由于float数量的不同，ALU利用率从100%依次下降为75%、50%、25%。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://img2018.cnblogs.com/blog/1617944/201909/1617944-20190906001418746-831705203.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;为了解决着色器在低维向量的利用率低的问题，可以通过合并1D与3D或2D与2D的指令。例如下图，DP3指令用了3D数据，ADD指令只有1D数据，co-issue会自动将它们合并，在同一个ALU只需一个指令周期即可执行完。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://img2018.cnblogs.com/blog/1617944/201909/1617944-20190906001427705-915501113.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;但是，对于向量运算单元（Vector ALU），如果其中一个变量既是操作数又是存储数的情况，无法启用co-issue技术：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://img2018.cnblogs.com/blog/1617944/201909/1617944-20190906001436218-1727443284.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;于是标量指令着色器（Scalar Instruction Shader）应运而生，它可以有效地组合任何向量，开启co-issue技术，充分发挥SIMD的优势。&lt;/p&gt;
+</description>
+        <pubDate>Tue, 20 Oct 2020 00:00:00 +0000</pubDate>
+        <link>https://wangpengcheng.github.io//2020/10/20/cude_by_example/</link>
+        <guid isPermaLink="true">https://wangpengcheng.github.io//2020/10/20/cude_by_example/</guid>
+        
+        <category>C/C++</category>
+        
+        <category>complier</category>
+        
+        <category>CUDA</category>
+        
+        <category>NVCC</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>字节面试准备</title>
+        <description>&lt;h1 id=&quot;字节跳动面试准备&quot;&gt;字节跳动面试准备&lt;/h1&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;2020-09-25 16:04:58&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;0-面试岗位和时间&quot;&gt;0. 面试岗位和时间&lt;/h2&gt;
+&lt;p&gt;|岗位|地点|时间|
+|:—:|:—:|:—:|
+|后端研发广告|北京|2020-09-28:14:00|&lt;/p&gt;
+
+&lt;h2 id=&quot;1-牛客面经总结&quot;&gt;1. 牛客面经总结&lt;/h2&gt;
+
+</description>
+        <pubDate>Fri, 25 Sep 2020 00:00:00 +0000</pubDate>
+        <link>https://wangpengcheng.github.io//2020/09/25/bytedance_review/</link>
+        <guid isPermaLink="true">https://wangpengcheng.github.io//2020/09/25/bytedance_review/</guid>
+        
+        <category>Java</category>
+        
+        <category>实习笔记</category>
+        
+        <category>中间件</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>ali中间件学习笔记(二)</title>
+        <description>&lt;p&gt;&lt;a href=&quot;https://labuladong.gitbook.io/algo/di-ling-zhang-bi-du-xi-lie&quot;&gt;算法刷题笔记&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;阿里中间件学习笔记&quot;&gt;阿里中间件学习笔记&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/alibaba/tengine&quot;&gt;tengine&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/alibaba/arthas&quot;&gt;arthas&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/takeseem/diamond&quot;&gt;diamond&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Tue, 25 Aug 2020 00:00:00 +0000</pubDate>
+        <link>https://wangpengcheng.github.io//2020/08/25/hsf_learn_note/</link>
+        <guid isPermaLink="true">https://wangpengcheng.github.io//2020/08/25/hsf_learn_note/</guid>
+        
+        <category>Java</category>
+        
+        <category>实习笔记</category>
+        
+        <category>中间件</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>ali中间件学习笔记</title>
+        <description>&lt;h1 id=&quot;阿里中间件学习笔记&quot;&gt;阿里中间件学习笔记&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/alibaba/tengine&quot;&gt;tengine&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/alibaba/arthas&quot;&gt;arthas&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/takeseem/diamond&quot;&gt;diamond&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/alibaba/Sentinel&quot;&gt;Sentinel&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;testbreakpointStorePlay&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;SopStoreBreakpointRequest&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;SopStoreBreakpointRequest&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setSessionId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;sid&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setResumeParamMaps&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Maps&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;newHashMap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;Boolean&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;res&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Boolean&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;TRUE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;doReturn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;when&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sopEngineManager&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;breakpointStorePlay&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;anyObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;Result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Void&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sopRuntimeService&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;breakpointStorePlay&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;Assert&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;assertTrue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getSuccess&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;res&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Boolean&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;FALSE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;Result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Void&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;failRes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sopRuntimeService&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;breakpointStorePlay&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;Assert&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;assertFalse&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;failRes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getSuccess&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Tue, 25 Aug 2020 00:00:00 +0000</pubDate>
+        <link>https://wangpengcheng.github.io//2020/08/25/ali_middleware_learn_note/</link>
+        <guid isPermaLink="true">https://wangpengcheng.github.io//2020/08/25/ali_middleware_learn_note/</guid>
+        
+        <category>Java</category>
+        
+        <category>实习笔记</category>
+        
+        <category>中间件</category>
+        
+        
+      </item>
+    
+  </channel>
+</rss>
